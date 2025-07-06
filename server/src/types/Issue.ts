@@ -6,6 +6,7 @@ export interface Issue {
   description: string;             // Detailed description
   status: 'open' | 'in_progress' | 'resolved' | 'closed';
   priority?: 'low' | 'medium' | 'high' | 'urgent';  // Priority level
+  dueDate?: Date;                  // Due date for the issue
   createdAt: Date;                 // Creation timestamp
   updatedAt: Date;                 // Last update timestamp
   creator: {

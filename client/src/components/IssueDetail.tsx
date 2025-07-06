@@ -74,6 +74,7 @@ const IssueDetail: React.FC<IssueDetailProps> = ({
         description: currentIssue.description,
         status: currentIssue.status,
         priority: currentIssue.priority,
+        dueDate: currentIssue.dueDate ? currentIssue.dueDate.substring(0, 16) : '',
         tags: currentIssue.tags || [],
         assignees: assigneeUsers.map(a => ({
           userId: a.userId,
@@ -97,6 +98,7 @@ const IssueDetail: React.FC<IssueDetailProps> = ({
       description: currentIssue.description,
       status: currentIssue.status,
       priority: currentIssue.priority,
+      dueDate: currentIssue.dueDate ? currentIssue.dueDate.substring(0, 16) : '',
       tags: currentIssue.tags || [],
       assignees: assigneeUsers.map(a => ({
         userId: a.userId,
@@ -439,6 +441,31 @@ const IssueDetail: React.FC<IssueDetailProps> = ({
                     fontWeight: 500,
                   }}
                 />
+              )}
+            </Box>
+
+            {/* Due Date */}
+            <Box sx={{ mb: 3 }}>
+              <Typography variant="subtitle2" sx={{ mb: 1, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 1 }}>
+                <CalendarIcon fontSize="small" />
+                Due Date & Time
+              </Typography>
+              {isEditing ? (
+                <TextField
+                  fullWidth
+                  type="datetime-local"
+                  value={editData.dueDate || ''}
+                  onChange={(e) => setEditData({ ...editData, dueDate: e.target.value })}
+                  variant="outlined"
+                  size="small"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              ) : (
+                <Typography variant="body2" color="text.secondary">
+                  {currentIssue.dueDate ? new Date(currentIssue.dueDate).toLocaleString() : 'No due date set'}
+                </Typography>
               )}
             </Box>
 

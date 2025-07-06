@@ -45,6 +45,7 @@ const CreateIssueDialog: React.FC<CreateIssueDialogProps> = ({
     title: '',
     description: '',
     priority: 'medium' as 'low' | 'medium' | 'high' | 'urgent',
+    dueDate: '',
     tags: [] as string[],
     newTag: '',
     assignees: [] as User[],
@@ -76,6 +77,7 @@ const CreateIssueDialog: React.FC<CreateIssueDialogProps> = ({
         title: formData.title,
         description: formData.description,
         priority: formData.priority,
+        dueDate: formData.dueDate || undefined,
         tags: formData.tags,
         assignees: formData.assignees.map(user => ({
           userId: user.userId,
@@ -98,6 +100,7 @@ const CreateIssueDialog: React.FC<CreateIssueDialogProps> = ({
       title: '',
       description: '',
       priority: 'medium',
+      dueDate: '',
       tags: [],
       newTag: '',
       assignees: [],
@@ -309,6 +312,31 @@ const CreateIssueDialog: React.FC<CreateIssueDialogProps> = ({
                     <MenuItem value="urgent">🔴 Urgent</MenuItem>
                   </Select>
                 </FormControl>
+              </Box>
+
+              {/* Due Date Section */}
+              <Box sx={{ mb: 4 }}>
+                <Typography variant="body2" sx={{ mb: 1, fontWeight: 500, color: '#24292f' }}>
+                  Due Date & Time
+                </Typography>
+                <TextField
+                  fullWidth
+                  type="datetime-local"
+                  value={formData.dueDate}
+                  onChange={(e) => setFormData({ ...formData, dueDate: e.target.value })}
+                  variant="outlined"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  sx={{
+                    '& .MuiOutlinedInput-root': {
+                      borderRadius: 1,
+                      '&:hover .MuiOutlinedInput-notchedOutline': {
+                        borderColor: '#1976d2',
+                      },
+                    },
+                  }}
+                />
               </Box>
 
               {/* Assignees Section */}

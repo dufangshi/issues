@@ -36,6 +36,9 @@ const IssueSchema = new Schema<IssueDocument>({
     enum: ['low', 'medium', 'high', 'urgent'],
     default: 'medium'
   },
+  dueDate: {
+    type: Date
+  },
   creator: {
     userId: { type: String, required: true },
     username: { type: String }

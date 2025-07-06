@@ -23,6 +23,7 @@ export interface Issue {
   description: string;
   status: 'open' | 'in_progress' | 'resolved' | 'closed';
   priority: 'low' | 'medium' | 'high' | 'urgent';
+  dueDate?: string;
   createdAt: string;
   updatedAt: string;
   creator: User;
@@ -43,6 +44,7 @@ export interface CreateIssueRequest {
   title: string;
   description: string;
   priority?: 'low' | 'medium' | 'high' | 'urgent';
+  dueDate?: string;
   tags?: string[];
   assignees?: AssigneeRequest[];
   nodes?: { nodeId: string; nodeType?: string }[];
@@ -53,6 +55,7 @@ export interface UpdateIssueRequest {
   description?: string;
   status?: 'open' | 'in_progress' | 'resolved' | 'closed';
   priority?: 'low' | 'medium' | 'high' | 'urgent';
+  dueDate?: string;
   tags?: string[];
   assignees?: AssigneeRequest[];
   nodes?: { nodeId: string; nodeType?: string }[];

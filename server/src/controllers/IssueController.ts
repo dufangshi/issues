@@ -44,13 +44,12 @@ export const getIssueById = async (req: Request, res: Response) => {
 // Create a new issue
 export const createIssue = async (req: Request, res: Response) => {
   try {
-    const { treeId, title, description, priority, creator, assignees, nodes, tags } = req.body;
+    const { treeId, title, description, priority, dueDate, creator, assignees, nodes, tags } = req.body;
     
-    console.log('Creating issue with data:', { treeId, title, description, priority, creator, assignees, nodes, tags });
+    console.log('Creating issue with data:', { treeId, title, description, priority, dueDate, creator, assignees, nodes, tags });
     
-    // Generate issue ID (format: TREE_001, TREE_002, etc.)
-    const issueCount = await Issue.countDocuments({ treeId });
-    const issueId = `${treeId.toUpperCase()}_${String(issueCount + 1).padStart(3, '0')}`;
+    // Generate issue ID using UUID
+    const issueId = uuidv4();
     
     const newIssue = new Issue({
       issueId,
@@ -58,6 +57,7 @@ export const createIssue = async (req: Request, res: Response) => {
       title,
       description,
       priority: priority || 'medium',
+      dueDate: dueDate || undefined,
       creator,
       assignees: assignees || [],
       nodes: nodes || [],
