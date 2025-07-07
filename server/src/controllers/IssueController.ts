@@ -49,6 +49,7 @@ export const createIssue = async (req: Request, res: Response) => {
     console.log('Creating issue with data:', { treeId, title, description, priority, dueDate, creator, assignees, nodes, tags });
     
     // Generate issue ID using UUID
+    // TODO: use the mongodb object id
     const issueId = uuidv4();
     
     const newIssue = new Issue({
