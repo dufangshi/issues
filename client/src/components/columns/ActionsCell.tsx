@@ -10,7 +10,7 @@ interface ActionsCellProps {
 }
 
 const ActionsCell: React.FC<ActionsCellProps> = ({ row, onEdit, onDelete }) => (
-  <Box sx={{ display: 'flex', gap: 0.5 }}>
+  <>
     <Tooltip title="Edit">
       <IconButton size="small" onClick={() => onEdit(row)} sx={{ p: 0.5 }}>
         <EditIcon fontSize="small" />
@@ -21,7 +21,7 @@ const ActionsCell: React.FC<ActionsCellProps> = ({ row, onEdit, onDelete }) => (
         <DeleteIcon fontSize="small" />
       </IconButton>
     </Tooltip>
-  </Box>
+  </>
 );
 
 export default ActionsCell; 

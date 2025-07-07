@@ -6,7 +6,7 @@ interface TagsCellProps {
 }
 
 const TagsCell: React.FC<TagsCellProps> = ({ value }) => (
-  <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap' }}>
+  <>
     {value && value.length > 0 ? (
       <>
         {value.slice(0, 2).map((tag, index) => (
@@ -36,9 +36,18 @@ const TagsCell: React.FC<TagsCellProps> = ({ value }) => (
         )}
       </>
     ) : (
-      <span style={{ color: '#999', fontSize: '0.8rem' }}>No tags</span>
+        <Chip
+            label={`No tags`}
+            size="small"
+            sx={{
+              bgcolor: '#f5f5f5',
+              color: '#666',
+              fontSize: '0.75rem',
+              height: 20,
+            }}
+        />
     )}
-  </Box>
+  </>
 );
 
 export default TagsCell; 

@@ -68,7 +68,7 @@ const AssigneeManager: React.FC<AssigneeManagerProps> = ({
   // List variant - compact display for table rows
   if (variant === 'list') {
     return (
-      <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap', alignItems: 'center' }}>
+      <>
         {assignees.length > 0 ? (
           <>
             {assignees.slice(0, maxDisplay).map((assignee, index) => (
@@ -80,7 +80,6 @@ const AssigneeManager: React.FC<AssigneeManagerProps> = ({
                     bgcolor: '#f3e5f5',
                     color: '#7b1fa2',
                     fontSize: '0.75rem',
-                    height: 20,
                     maxWidth: 80,
                     '& .MuiChip-label': {
                       overflow: 'hidden',
@@ -98,7 +97,6 @@ const AssigneeManager: React.FC<AssigneeManagerProps> = ({
                   bgcolor: '#f5f5f5',
                   color: '#666',
                   fontSize: '0.75rem',
-                  height: 20,
                 }}
               />
             )}
@@ -106,7 +104,7 @@ const AssigneeManager: React.FC<AssigneeManagerProps> = ({
         ) : (
           <span style={{ color: '#999', fontSize: '0.8rem' }}>Unassigned</span>
         )}
-      </Box>
+      </>
     );
   }
 

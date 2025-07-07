@@ -1,39 +1,19 @@
-import React, {useState, useEffect} from 'react';
-import {
-    Box,
-    Typography,
-    Button,
-    Chip,
-    IconButton,
-    Tooltip,
-    FormControl,
-    InputLabel,
-    Select,
-    MenuItem,
-    Snackbar,
-    Alert,
-} from '@mui/material';
+import React, {useEffect, useState} from 'react';
 import type {SelectChangeEvent} from '@mui/material';
-import {DataGrid} from '@mui/x-data-grid';
+import {Alert, Box, Button, FormControl, InputLabel, MenuItem, Select, Snackbar, Typography,} from '@mui/material';
 import type {GridColDef, GridRenderCellParams} from '@mui/x-data-grid';
-import {
-    Add as AddIcon,
-    Edit as EditIcon,
-    Delete as DeleteIcon,
-    Visibility as ViewIcon,
-} from '@mui/icons-material';
-import type {Issue, UpdateIssueRequest, CreateIssueRequest} from '../types/Issue';
+import {DataGrid} from '@mui/x-data-grid';
+import {Add as AddIcon,} from '@mui/icons-material';
+import type {CreateIssueRequest, Issue, UpdateIssueRequest} from '../types/Issue';
 import issueService from '../services/issueService';
 import CreateIssueDialog from './CreateIssueDialog';
 import IssueDetail from './IssueDetail';
 import TitleCell from './columns/TitleCell';
 import StatusCell from './columns/StatusCell';
 import PriorityCell from './columns/PriorityCell';
-import CreatorCell from './columns/CreatorCell';
 import AssigneesCell from './columns/AssigneesCell';
 import TagsCell from './columns/TagsCell';
 import DueDateCell from './columns/DueDateCell';
-import CreatedAtCell from './columns/CreatedAtCell';
 import ActionsCell from './columns/ActionsCell';
 
 interface IssueListProps {
@@ -167,15 +147,6 @@ const IssueList: React.FC<IssueListProps> = ({treeId, nodeId}) => {
             ),
         },
         {
-            field: 'creator',
-            headerName: 'Creator',
-            width: 120,
-            minWidth: 120,
-            renderCell: (params: GridRenderCellParams) => (
-                <CreatorCell value={params.value}/>
-            ),
-        },
-        {
             field: 'assignees',
             headerName: 'Assignees',
             width: 180,
@@ -200,15 +171,6 @@ const IssueList: React.FC<IssueListProps> = ({treeId, nodeId}) => {
             minWidth: 140,
             renderCell: (params: GridRenderCellParams) => (
                 <DueDateCell value={params.value}/>
-            ),
-        },
-        {
-            field: 'createdAt',
-            headerName: 'Created',
-            width: 110,
-            minWidth: 110,
-            renderCell: (params: GridRenderCellParams) => (
-                <CreatedAtCell value={params.value}/>
             ),
         },
         {

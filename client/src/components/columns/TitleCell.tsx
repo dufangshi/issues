@@ -13,6 +13,7 @@ const TitleCell: React.FC<TitleCellProps> = ({ value, row, onSelect }) => (
     label={value}
     onClick={() => onSelect(row)}
     sx={{ cursor: 'pointer' }}
+    size="small"
   />
 );
 
