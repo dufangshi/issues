@@ -1,49 +1,35 @@
 import React, {useEffect, useState} from 'react';
-import type {SelectChangeEvent} from '@mui/material';
-import {Alert, Box, Button, FormControl, InputLabel, MenuItem, Select, Snackbar, Typography,} from '@mui/material';
-import type {GridColDef, GridRenderCellParams} from '@mui/x-data-grid';
-import {DataGrid} from '@mui/x-data-grid';
+import {Alert, Box, Button, Snackbar, Typography,} from '@mui/material';
 import {Add as AddIcon,} from '@mui/icons-material';
 import type {CreateIssueRequest, Issue, UpdateIssueRequest} from '../../types/Issue.ts';
 import issueService from '../../services/issueService.ts';
 import CreateIssueDialog from '../CreateIssueDialog.tsx';
 import IssueDetail from '../IssueDetail/IssueDetail.tsx';
-import TitleCell from './columns/TitleCell.tsx';
-import StatusCell from './columns/StatusCell.tsx';
-import PriorityCell from './columns/PriorityCell.tsx';
-import AssigneesCell from './columns/AssigneesCell.tsx';
-import TagsCell from './columns/TagsCell.tsx';
-import DueDateCell from './columns/DueDateCell.tsx';
-import ActionsCell from './columns/ActionsCell.tsx';
+import IssueDataGrid from './IssueDataGrid.tsx';
 
 interface IssueListProps {
     treeId: string;
     nodeId?: string;
+    simple?: boolean;
 }
 
-const IssueList: React.FC<IssueListProps> = ({treeId, nodeId}) => {
+const IssueList: React.FC<IssueListProps> = ({treeId, nodeId, simple = false}) => {
     const [issues, setIssues] = useState<Issue[]>([]);
     const [loading, setLoading] = useState(true);
     const [selectedIssue, setSelectedIssue] = useState<Issue | null>(null);
     const [createDialogOpen, setCreateDialogOpen] = useState(false);
-    const [filters, setFilters] = useState({
-        status: '',
-        priority: '',
-    });
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
-    // Fetch issues on component mount or when filters change
+    // Fetch issues on component mount
     useEffect(() => {
         loadIssues();
-    }, [treeId, nodeId, filters]);
+    }, [treeId, nodeId]);
 
     const loadIssues = async () => {
         try {
             setLoading(true);
             const params = {
-                ...(filters.status && {status: filters.status}),
-                ...(filters.priority && {priority: filters.priority}),
                 ...(nodeId && {nodeId}),
             };
             const issuesData = await issueService.getIssuesByTree(treeId, params);
@@ -67,14 +53,6 @@ const IssueList: React.FC<IssueListProps> = ({treeId, nodeId}) => {
                 setErrorMessage('Failed to delete issue');
             }
         }
-    };
-
-    const handleStatusChange = (event: SelectChangeEvent<string>) => {
-        setFilters({...filters, status: event.target.value});
-    };
-
-    const handlePriorityChange = (event: SelectChangeEvent<string>) => {
-        setFilters({...filters, priority: event.target.value});
     };
 
     const handleCreateIssue = async (issueData: CreateIssueRequest) => {
@@ -117,75 +95,6 @@ const IssueList: React.FC<IssueListProps> = ({treeId, nodeId}) => {
         setSelectedIssue(issue);
     };
 
-    const columns: GridColDef[] = [
-        {
-            field: 'title',
-            headerName: 'Title',
-            width: 200,
-            minWidth: 200,
-            flex: 1,
-            renderCell: (params: GridRenderCellParams) => (
-                <TitleCell value={params.value} row={params.row} onSelect={setSelectedIssue}/>
-            ),
-        },
-        {
-            field: 'status',
-            headerName: 'Status',
-            width: 100,
-            minWidth: 100,
-            renderCell: (params: GridRenderCellParams) => (
-                <StatusCell value={params.value}/>
-            ),
-        },
-        {
-            field: 'priority',
-            headerName: 'Priority',
-            width: 100,
-            minWidth: 100,
-            renderCell: (params: GridRenderCellParams) => (
-                <PriorityCell value={params.value}/>
-            ),
-        },
-        {
-            field: 'assignees',
-            headerName: 'Assignees',
-            width: 180,
-            minWidth: 150,
-            renderCell: (params: GridRenderCellParams) => (
-                <AssigneesCell value={params.value}/>
-            ),
-        },
-        {
-            field: 'tags',
-            headerName: 'Tags',
-            width: 150,
-            minWidth: 120,
-            renderCell: (params: GridRenderCellParams) => (
-                <TagsCell value={params.value}/>
-            ),
-        },
-        {
-            field: 'dueDate',
-            headerName: 'Due Date & Time',
-            width: 140,
-            minWidth: 140,
-            renderCell: (params: GridRenderCellParams) => (
-                <DueDateCell value={params.value}/>
-            ),
-        },
-        {
-            field: 'actions',
-            headerName: 'Actions',
-            width: 140,
-            minWidth: 140,
-            sortable: false,
-            disableColumnMenu: true,
-            renderCell: (params: GridRenderCellParams) => (
-                <ActionsCell row={params.row} onEdit={handleEditIssue} onDelete={handleDeleteIssue}/>
-            ),
-        },
-    ];
-
     return (
         <Box sx={{height: 600, width: '100%'}}>
             <Box sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2}}>
@@ -201,74 +110,13 @@ const IssueList: React.FC<IssueListProps> = ({treeId, nodeId}) => {
                 </Button>
             </Box>
 
-            <Box sx={{display: 'flex', gap: 2, mb: 2}}>
-                <FormControl size="small" sx={{minWidth: 120}}>
-                    <InputLabel>Status</InputLabel>
-                    <Select
-                        value={filters.status}
-                        label="Status"
-                        onChange={handleStatusChange}
-                    >
-                        <MenuItem value="">All</MenuItem>
-                        <MenuItem value="open">Open</MenuItem>
-                        <MenuItem value="in_progress">In Progress</MenuItem>
-                        <MenuItem value="resolved">Resolved</MenuItem>
-                        <MenuItem value="closed">Closed</MenuItem>
-                    </Select>
-                </FormControl>
-
-                <FormControl size="small" sx={{minWidth: 120}}>
-                    <InputLabel>Priority</InputLabel>
-                    <Select
-                        value={filters.priority}
-                        label="Priority"
-                        onChange={handlePriorityChange}
-                    >
-                        <MenuItem value="">All</MenuItem>
-                        <MenuItem value="low">Low</MenuItem>
-                        <MenuItem value="medium">Medium</MenuItem>
-                        <MenuItem value="high">High</MenuItem>
-                        <MenuItem value="urgent">Urgent</MenuItem>
-                    </Select>
-                </FormControl>
-            </Box>
-
-            <DataGrid
-                rows={issues}
-                columns={columns}
+            <IssueDataGrid
+                issues={issues}
                 loading={loading}
-                pageSizeOptions={[5, 10, 25]}
-                initialState={{
-                    pagination: {
-                        paginationModel: {page: 0, pageSize: 10},
-                    },
-                }}
-                getRowId={(row) => row.issueId}
-                disableRowSelectionOnClick
-                sx={{
-                    '& .MuiDataGrid-main': {
-                        overflow: 'visible'
-                    },
-                    '& .MuiDataGrid-columnHeaders': {
-                        backgroundColor: '#f5f5f5',
-                        minHeight: '35px !important',
-                        maxHeight: '35px !important',
-                    },
-                    '& .MuiDataGrid-columnHeader': {
-                        minHeight: '35px !important',
-                        maxHeight: '35px !important',
-                    },
-                    '& .MuiDataGrid-cell': {
-                        padding: '4px',
-                        display: 'flex',
-                    },
-                }}
-                autoHeight={false}
-                rowHeight={35}
-                slots={{
-                    footer: issues.length > 20 ? undefined : () => null,
-                }}
-                showToolbar={true}
+                simple={simple}
+                onIssueSelect={setSelectedIssue}
+                onIssueEdit={handleEditIssue}
+                onIssueDelete={handleDeleteIssue}
             />
 
             {/* Issue Detail Dialog */}
