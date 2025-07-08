@@ -266,9 +266,9 @@ const IssueList: React.FC<IssueListProps> = ({treeId, nodeId}) => {
                 autoHeight={false}
                 rowHeight={35}
                 slots={{
-                  footer: issues.length > 20 ? undefined : () => null,
-              }}
-              showToolbar={true}
+                    footer: issues.length > 20 ? undefined : () => null,
+                }}
+                showToolbar={true}
             />
 
             {/* Issue Detail Dialog */}
