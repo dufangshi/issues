@@ -1,5 +1,5 @@
 import React from 'react';
-import AssigneeManager from '../AssigneeManager';
+import AssigneeManager from '../../AssigneeManager.tsx';
 
 interface AssigneesCellProps {
     value: any[];

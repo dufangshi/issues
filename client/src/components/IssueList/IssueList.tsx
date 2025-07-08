@@ -4,17 +4,17 @@ import {Alert, Box, Button, FormControl, InputLabel, MenuItem, Select, Snackbar,
 import type {GridColDef, GridRenderCellParams} from '@mui/x-data-grid';
 import {DataGrid} from '@mui/x-data-grid';
 import {Add as AddIcon,} from '@mui/icons-material';
-import type {CreateIssueRequest, Issue, UpdateIssueRequest} from '../types/Issue';
-import issueService from '../services/issueService';
-import CreateIssueDialog from './CreateIssueDialog';
-import IssueDetail from './IssueDetail';
-import TitleCell from './columns/TitleCell';
-import StatusCell from './columns/StatusCell';
-import PriorityCell from './columns/PriorityCell';
-import AssigneesCell from './columns/AssigneesCell';
-import TagsCell from './columns/TagsCell';
-import DueDateCell from './columns/DueDateCell';
-import ActionsCell from './columns/ActionsCell';
+import type {CreateIssueRequest, Issue, UpdateIssueRequest} from '../../types/Issue.ts';
+import issueService from '../../services/issueService.ts';
+import CreateIssueDialog from '../CreateIssueDialog.tsx';
+import IssueDetail from '../IssueDetail/IssueDetail.tsx';
+import TitleCell from './columns/TitleCell.tsx';
+import StatusCell from './columns/StatusCell.tsx';
+import PriorityCell from './columns/PriorityCell.tsx';
+import AssigneesCell from './columns/AssigneesCell.tsx';
+import TagsCell from './columns/TagsCell.tsx';
+import DueDateCell from './columns/DueDateCell.tsx';
+import ActionsCell from './columns/ActionsCell.tsx';
 
 interface IssueListProps {
     treeId: string;

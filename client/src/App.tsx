@@ -2,7 +2,7 @@ import React from 'react';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import {Container} from '@mui/material';
-import IssueList from './components/IssueList';
+import IssueList from './components/IssueList/IssueList.tsx';
 
 // Create a custom theme
 const theme = createTheme({
