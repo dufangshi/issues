@@ -17,8 +17,6 @@ const TagsCell: React.FC<TagsCellProps> = ({ value }) => (
             sx={{
               bgcolor: '#e3f2fd',
               color: '#1976d2',
-              fontSize: '0.75rem',
-              height: 20,
             }}
           />
         ))}
@@ -27,10 +25,7 @@ const TagsCell: React.FC<TagsCellProps> = ({ value }) => (
             label={`+${value.length - 2}`}
             size="small"
             sx={{
-              bgcolor: '#f5f5f5',
-              color: '#666',
-              fontSize: '0.75rem',
-              height: 20,
+              color: '#000000'
             }}
           />
         )}
@@ -40,10 +35,7 @@ const TagsCell: React.FC<TagsCellProps> = ({ value }) => (
             label={`No tags`}
             size="small"
             sx={{
-              bgcolor: '#f5f5f5',
-              color: '#666',
-              fontSize: '0.75rem',
-              height: 20,
+              color: '#000000'
             }}
         />
     )}

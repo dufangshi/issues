@@ -251,13 +251,24 @@ const IssueList: React.FC<IssueListProps> = ({treeId, nodeId}) => {
                     },
                     '& .MuiDataGrid-columnHeaders': {
                         backgroundColor: '#f5f5f5',
+                        minHeight: '35px !important',
+                        maxHeight: '35px !important',
+                    },
+                    '& .MuiDataGrid-columnHeader': {
+                        minHeight: '35px !important',
+                        maxHeight: '35px !important',
                     },
                     '& .MuiDataGrid-cell': {
-                        padding: '8px',
+                        padding: '4px',
+                        display: 'flex',
                     },
                 }}
                 autoHeight={false}
-                rowHeight={60}
+                rowHeight={35}
+                slots={{
+                  footer: issues.length > 20 ? undefined : () => null,
+              }}
+              showToolbar={true}
             />
 
             {/* Issue Detail Dialog */}
